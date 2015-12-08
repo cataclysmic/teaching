@@ -1,0 +1,221 @@
+# reveal.js test presentation
+# <2015-12-07 Mo>
+# Short presentation on 
+# 1 - emacs installation (windows)
+# 2 - git installation / usage 
+# 3 - org-mode installation usage
+
+# Configure the slides
+#+REVEAL_HLEVEL: 1
+#+REVEAL_THEME: league
+#+OPTIONS:reveal_slide_number:nil
+#+OPTIONS: num:nil
+# REVEAL_MATHJAX_URL: file:///home/cataclysmic/Research/teaching/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+# REVEAL_ROOT: file:///home/cataclysmic/Research/teaching/reveal.js/
+#+REVEAL_ROOT: http://lab.hakim.se/reveal-js/
+# REVEAL_PLUGINS: (highlight)
+# REVEAL_HIGHLIGHT_CSS: (zenburn)
+
+#+TITLE: Emacs + Org-Mode + Git (Magit)
+#+AUTHOR: Felix Albrecht
+#+EMAIL: felix.abrecht.uni@gmail.com
+#+WEBSITE: felixalbrecht.net
+
+* Introduction
+
+** Why do I torture you? 
+  
+  - quick and efficient collaboration
+  - you should learn things during your thesis writing time
+  - many never learn about efficient work-flows of programmers
+  - people that can interact with programmers are well sought after
+  - there is more out there in terms of tech than many know
+  - I try new stuff on a regular basis
+  - I like to teach
+
+* Emacs 
+:PROPERTIES:
+:reveal_background: #008800
+:reveal_background: ./img/emacs.png
+:END:
+  
+"Emacs is an operating system, [...]"
+
+** About emacs
+
+  - editor with a history
+  - initial release 1976
+  - still great
+	- many improvements over time
+  - plugins for LaTeX, project planning, games, even email
+  - plugins are handled via integrated package management system
+  - offer its own programming language for plugins & functions *emacs-lisp* (elisp)
+	
+** Installation 
+
+*Linux*
+	- use you distributions package manager
+*Mac*
+	- Installation from [[http://emacsformacosx.com][website]]
+    - installation via [[http://www.emacswiki.org/emacs/EmacsForMacOS][packages]]
+*Windows*
+	- installation a bit tricky under Windows
+	- download installation files from this [[https://www.gnu.org/software/emacs/][website]]
+	
+** Configuration
+
+   - Emacs uses *.emacs* to configure local parameters
+   - location of /.emacs/:
+	 - /C:\User\Username\AppData/  (hidden directory)
+   - used for
+	 - enabling plugins
+	 - reconfiguring defaults (e.g. keyboard shortcuts)
+	 - writing personal functions
+
+** Controlling (basic)   
+
+   - *C* = control key (CTRL)
+   - *M* = meta key (ALT)
+   - *M-x* = jump to command line (bottom of window)
+   - *C-g* = cancel command in command line
+   - *C-x C-f* = find file (open); create if not found
+   - *C-x C-s* = save file
+   - *C-x C-b* = list buffers, select buffer with mouse (keys)
+
+[[http://www.rgrjr.com/emacs/emacs_cheat.html][Emacs Cheatsheet]]
+
+*** Configuring package manager
+	 
+in *.emacs* copy the following code, then restart Emacs
+ 
+#+BEGIN_SRC emacs-lisp	   
+	(require 'package)
+
+	(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+	(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+	(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
+
+	(setq package-enable-at-startup nil)
+	(package-initialize)
+#+END_SRC
+
+* Org-Mode
+:PROPERTIES:
+:reveal_background: #005000
+:reveal_background: ./img/org1.png
+:END:
+
+"Your life in text files"
+
+** About Org-Mode
+
+  - /office suite/ for Emacs
+  - simple text files
+  - behave like office documents
+  - many options & plugins
+	
+** If it's like Office, why not use office?
+
+	- frequent compatibility issues
+	- cross platform issues
+	- easy to navigate & change structure
+	- quick export to PDF, HTML, presentations and more
+	- connectable to LaTeX, programming files, data, scrpt-files
+	- code can be run from within org-files
+	- multi-file support
+	- office files cannot be change tracked (git)
+	- working with the keyboard alone is more effective
+	  
+** Installation 
+
+*via MELPA package-manager from within Emacs*
+
+1) in Emacs type: _M+x_  /(Alt+x)/
+   + opens the command line at the bottom
+2) type: package-list
+   + a list of available packages gets downloaded from the server
+3) select *org-mode* link
+   + a secondary screen opens with an install button
+4) install
+   + Emacs automatically restarts
+   + the next time you open an *.org* file Emacs will load org-mode
+	
+** Links to Online-Ressources
+
+	*Tutorials and Cookbooks*
+
+	- [[http://orgmode.org/worg/org-tutorials/index.html][Overview over Existing Org-Mode Tutorials]]
+	- [[http://home.fnal.gov/~neilsen/notebook/orgExamples/org-examples.html][Emacs Cookbook]]
+	  
+	*Youtube*
+	- [[https://www.youtube.com/watch?v=fgizHHd7nOo][org mode is awesome]]
+	- [[https://www.youtube.com/watch?v=bzZ09dAbLEE][Taking Notes in Emacs-Org-Mode]]
+
+* Git
+:PROPERTIES:
+:reveal_background: #000050
+:reveal_background: ./img/git-flow-bg.png
+:END:
+
+"Trackable, reproducible research"
+
+** About Git
+
+   - tool for collaborative programming work and project management
+   - tracking changes in text files (programming files)
+   - initially only used by programmers but now also students, researchers, ...
+   - different from Dropbox
+	 - requires *manual* synchronisation to *avoid unwanted project changes*
+   - largest service on the web [[http://github.com][GitHub]] 
+[[./img/github-logo-sm.png]] 
+
+
+** Git Workflow
+
+[[./img/git-flow.png]]
+
+
+** Git usage (git bash)
+
+   - *git clone {Repository name}*
+	 - only used on initial repository start
+   - *git pull*
+	 - used to /pull/ changes *from* server *to* local repository
+   - *git add*
+	 - add file changes to staging area
+   - *git commit -m {message}*
+	 - add stages file changes to local repository with explanatory text
+   - *git push*
+	 - push changes *to* server *from* local repository
+	   
+*Magit makes this all a lot easier*
+	   
+** MaGit (Emacs git module)
+#+ATTR_REVEAL: frag highlight-blue
+
+	- *best* git administration tool for Emacs
+	- easy to use
+*M-x magit-status*
+	- calls git status in separate window on current folder
+	- asks if unsaved buffers should be saved so the changes can be staged
+	- if not in git repository, it asks for the correct folder
+	- overview over (un)staged files
+	- going to file with mouse buttons , hitting *s* stages files
+	- *u* unstages files
+#+REVEAL: split
+*C-c C-c*
+	- open command control interface
+	- all options are explained
+*C-c C-c c c*
+	- starts commit interface
+	  - shows diff of current file and local repository file
+	  - write short description of changes made
+*C-c C-c*
+	  - commits changes to local repository
+#+REVEAL: split
+*C-c C-c P P*
+	  - open push interface to push local repository changes to server
+*Online documentation*
+	- [[http://magit.vc/manual/][Magit Manual]]
+	- [[http://mianmack.com/magit-cheatsheet.html][Magit Cheatsheet]]
+
